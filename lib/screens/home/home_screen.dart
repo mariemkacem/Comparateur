@@ -1,7 +1,9 @@
-import 'package:comparateur_prix/screens/home/components/body.dart';
+import 'package:comparateur_prix/screens/home/components/bodyh.dart';
 import 'package:flutter/material.dart';
 
 
+import '../../components/coustom_bottom_nav_bar.dart';
+import '../../components/enums.dart';
 import '../../size_config.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -15,7 +17,9 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(),
-      body: Body(),
+      body: Bodyh(),
+      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.profile),
+
     );
   }
 }

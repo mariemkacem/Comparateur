@@ -1,4 +1,5 @@
 import 'package:comparateur_prix/constants.dart';
+import 'package:comparateur_prix/screens/complete_profile/components/complete_profile_form.dart';
 import 'package:comparateur_prix/screens/home/home_screen.dart';
 import 'package:comparateur_prix/screens/sign_up/components/signup_form.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,12 @@ class Body extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
-                SignUpForm(),
+                Visibility(
+                  visible: true,
+                  child: SignUpForm()
+                  ),
+                  
+                    
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

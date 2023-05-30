@@ -1,4 +1,5 @@
 import 'package:comparateur_prix/constants.dart';
+import 'package:comparateur_prix/screens/home/home_screen.dart';
 import 'package:comparateur_prix/screens/sign_in/sign_screen.dart';
 import 'package:comparateur_prix/screens/splash/splash_screen.dart';
 import 'package:comparateur_prix/size_config.dart';
@@ -23,12 +24,12 @@ class _BodyState extends State<Body> {
 
   List<Map<String, String>> splashData = [
     {
-      "text": "Welcome to Tokoto, Let’s shop!",
+      "text": "Welcome to COMPARY",
       "image": "assets/images/3.png"
     },
     {
       "text":
-          "We help people conect with store \naround United State of America",
+          "We help people compare products \naround many websites",
       "image": "assets/images/3.png"
     },
     {
@@ -75,7 +76,7 @@ class _BodyState extends State<Body> {
                 DefaultButton(
                   text: 'Continue',
                   press: () {
-                    Navigator.pushNamed(context, SignInScreen.routeName);
+                    Navigator.pushNamed(context, HomeScreen.routeName);
                   },
                 ),
                 Spacer(),

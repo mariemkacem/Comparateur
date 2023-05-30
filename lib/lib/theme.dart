@@ -10,7 +10,7 @@ ThemeData theme() {
      appBarTheme:  const AppBarTheme(
       color: Colors.white,
       elevation: 0,
-      brightness: Brightness.light,
+      //brightness: Brightness.light,
       iconTheme: IconThemeData(color: Colors.black),
      ),
      inputDecorationTheme: inputDecorationTheme(),

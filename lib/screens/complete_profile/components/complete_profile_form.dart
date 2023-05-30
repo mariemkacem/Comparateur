@@ -7,9 +7,8 @@ import 'package:http/http.dart' as http;
 import '../../../components/custom_surfix_icon.dart';
 import '../../../components/default_button.dart';
 import '../../../components/form_errors.dart';
-import '../../../components/user.dart';
 import '../../../constants.dart';
-import '../../../services/registerService.dart';
+import '../../../services/register_service.dart';
 import '../../otp_screen/otp_screen.dart';
 
 class CompleteProfileForm extends StatefulWidget {
@@ -20,13 +19,13 @@ class CompleteProfileForm extends StatefulWidget {
 class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   final _formKey = GlobalKey<FormState>();
-  final _nomController = TextEditingController();
+  final TextEditingController _nomController = TextEditingController();
   final _prenomController = TextEditingController();
   final _telController = TextEditingController();
   final List<String> errors = [];
-  String? firstName;
-  String? lastName;
-  String? phoneNumber;
+  late String firstName;
+  late String lastName;
+  late String phoneNumber;
 
   void addError({String? error}) {
         if (!errors.contains(error))
@@ -59,11 +58,12 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           buildPhoneNumberFormField(),
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(40)),
-          
+           
           DefaultButton(
             text: "Register",
             press: () async {
               if (_formKey.currentState!.validate()) {
+                firstName = _nomController.text.trim();
                 var url = Uri.parse('https://localhost:7035/api/Categorie');
                 var response = await http.get(url);
                 print('Response status: ${response.statusCode}');
@@ -85,7 +85,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
     return TextFormField(
       controller: _telController,
       keyboardType: TextInputType.phone,
-      onSaved: (newValue) => phoneNumber = newValue,
+      onSaved: (newValue) => phoneNumber = newValue!,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPhoneNumberNullError);
@@ -112,7 +112,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   TextFormField buildLastNameFormField() {
     return TextFormField(
       controller: _prenomController,
-      onSaved: (newValue) => lastName = newValue,
+      onSaved: (newValue) => lastName = newValue!,
        onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kLastNamenameNullError);
@@ -139,7 +139,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   TextFormField buildFirstNameFormField() {
     return TextFormField(
       controller: _nomController,
-      onSaved: (newValue) => firstName = newValue,
+      onSaved: (newValue) => firstName = newValue!,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kNamelNullError);
@@ -165,69 +165,5 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   }
 
-void _submitForm2(User user) async {
 
-  if (!_formKey.currentState!.validate()) {
-    return;
-  }
-  
-  final nomm = _nomController.text.trim();
-  final prenom = _prenomController.text.trim();
-  final tel = _telController.text.trim();
-  user.nom = nomm;
-  user.prenom = prenom ;
-  user.tel = tel ;
-  try {
-    await registerUser(user);
-    // Afficher un message de confirmation si l'inscription réussit
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text('Succès'),
-        content: Text('Votre inscription a réussi.'),
-        actions: <Widget>[
-          ElevatedButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.of(ctx).pop();
-            },
-          )
-        ],
-      ),
-    );
-  } on HttpException catch (error) {
-    // Afficher un message d'erreur si l'inscription a échoué
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text('Erreur'),
-        content: Text(error.message),
-        actions: <Widget>[
-          ElevatedButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.of(ctx).pop();
-            },
-          )
-        ],
-      ),
-    );
-  } catch (error) {
-    // Afficher un message d'erreur si une exception est levée
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text('Erreur'),
-        content: Text('Une erreur s\'est produite. Veuillez réessayer.'),
-        actions: <Widget>[
-          ElevatedButton(
-            child: Text('OK'),
-            onPressed: () {
-              Navigator.of(ctx).pop();
-            },
-          )
-        ],
-      ));
-  }
-}
 }

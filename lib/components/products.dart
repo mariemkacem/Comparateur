@@ -20,18 +20,18 @@ class Products extends StatelessWidget {
         title: "Products",
          press: (){},
       ),
-        SizedBox(width: getProportionateScreenWidth(20),)      ,
+        SizedBox(width: getProportionateScreenWidth(40),)      ,
 
-          SingleChildScrollView(
+        /*  SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row (
               children: [
-                ...List.generate(demoProducts.length,(index)=>ProductCard(product: demoProducts[index],)),
+                ...List.generate(demoProducts.length,(index)=>ProductCard(produit: demoProducts[index], id : demoProducts[index].id)),
                 SizedBox(width: getProportionateScreenWidth(20),)      ,
                 
               ],
                ),
-          ),
+          ),*/
         ],
       ),
     );

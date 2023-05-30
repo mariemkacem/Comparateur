@@ -1,16 +1,22 @@
+import 'package:comparateur_prix/models/User.dart';
 import 'package:comparateur_prix/screens/forgot_password/components/body.dart';
 import 'package:comparateur_prix/screens/forgot_password/forgot_password.dart';
 import 'package:comparateur_prix/services/authService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:jwt_decode/jwt_decode.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
-import '../../../components/authdata.dart';
+//import '../../../components/authdata.dart';
 import '../../../components/custom_surfix_icon.dart';
 import '../../../components/default_button.dart';
 import '../../../components/form_errors.dart';
 import '../../../constants.dart';
+import '../../../services/apiservice.dart';
+import '../../../services/login_service.dart';
 import '../../../size_config.dart';
+import '../../home/home_screen.dart';
 import '../../login_success/login_success_screen.dart';
 
 class SignForm extends StatefulWidget {
@@ -22,6 +28,43 @@ class SignForm extends StatefulWidget {
 
 
 class _SignFormState extends State<SignForm> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  User? user;
+
+
+
+ 
+
+  
+ 
+    _handleLogin() async {
+    var email = _emailController.text;
+    var password = _passwordController.text;
+
+    try {
+      
+      var data = await loginUser(email, password);
+      
+      //final user = data.user;
+      // Utilisez le token et les détails de l'utilisateur comme nécessaire
+       print(data);
+       //Map<String, dynamic> decodedToken = JwtDecoder.decode(data);
+      
+     //  String email = decodedToken['Email'];
+      //int id = decodedToken['identity']['IdUser'];
+      //String username = decodedToken['username'];
+
+    //print('Email: $email');
+    //print('ID: $id');
+    //print('Username: $username');
+      // print('User: ${user.username}');
+     // print(user);
+      //Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+    } catch (e) {
+      print('Erreur de connexion: $e');
+    }
+  }
   final _formKey = GlobalKey<FormState>();
   late String email ;
   late String password ;
@@ -66,7 +109,7 @@ class _SignFormState extends State<SignForm> {
             Text("Remember me"),
             Spacer(),
             GestureDetector(
-              onTap : (() =>  Navigator.pushNamed(context,ForgotPasswordScreen.routeName)),
+              onTap : (() =>  Navigator.pushNamed(context,HomeScreen.routeName)),
               child:Text("Forgot Password",
             style: TextStyle(decoration: TextDecoration.underline),
               ),
@@ -76,32 +119,25 @@ class _SignFormState extends State<SignForm> {
         FormError(errors: errors),
         SizedBox(height: getProportionateScreenHeight(20),),
         DefaultButton(
-          text: "Continue", 
+          text: "Login", 
           press: (){
             if (_formKey.currentState!.validate()){
               _formKey.currentState!.save();
-              submitForm();
-              Navigator.pushNamed(context, LoginSuccessScreen.routeName);         }
+              
+              _handleLogin();
+              }
           },
           ),
       ],
       ),
     );
   }
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-void submitForm() {
-  final email = emailController.text;
-  final password = passwordController.text;
-  final authData = AuthData(email: email, password: password);
-  authenticate(authData,"login");
-}
 
 
   TextFormField builPasswordFormField() {
         
     return TextFormField(
-      controller: passwordController,
+      controller: _passwordController,
         obscureText: true,
         onSaved: (newValue) => password = newValue! ,
         onChanged: (value) {
@@ -133,7 +169,7 @@ void submitForm() {
 
   TextFormField builEmailFormField() {
     return TextFormField(
-      controller: emailController,
+      controller: _emailController,
         keyboardType: TextInputType.emailAddress,
         onSaved: (newValue) => email = newValue! ,
         onChanged: (value) {

@@ -44,7 +44,14 @@ final otpInputDecoration = InputDecoration(
   focusedBorder: outlineInputBorder(),
   enabledBorder: outlineInputBorder(),
 );
+const kDefaultPadding = 20.0;
 
+// our default Shadow
+const kDefaultShadow = BoxShadow(
+  offset: Offset(0, 15),
+  blurRadius: 27,
+  color: Colors.black12,
+);
 OutlineInputBorder outlineInputBorder() {
   return OutlineInputBorder(
     borderRadius: BorderRadius.circular(getProportionateScreenWidth(15)),

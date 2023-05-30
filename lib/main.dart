@@ -1,3 +1,4 @@
+import 'package:comparateur_prix/screens/sign_in/sign_screen.dart';
 import 'package:comparateur_prix/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -19,8 +20,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: theme(),
-     // home: const SplashScreen(),
-     initialRoute:  SplashScreen.routeName,
+      //home: CategoriesWidget(),
+     initialRoute:  SignInScreen.routeName,
     routes: routes,
     );
   }
